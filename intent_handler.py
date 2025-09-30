@@ -1,10 +1,12 @@
 import json
 import re
 from difflib import get_close_matches
+from llm_handler import LLMHandler
 
 class IntentHandler:
     def __init__(self):
         self.intents = self.load_intents()
+        self.llm_handler = LLMHandler()
     
     def load_intents(self):
         """Load intents from JSON file"""
@@ -170,14 +172,30 @@ class IntentHandler:
         
         return best_match, best_score
     
-    def get_response(self, user_input):
+    def get_response(self, user_input, customer_name=None):
         """Get response for user input"""
         intent, confidence = self.find_best_intent(user_input)
-        
+
         if intent:
             import random
-            return random.choice(intent["responses"])
+            response = random.choice(intent["responses"])
+            # Customize greeting if customer_name is provided
+            if intent["tag"] == "greeting" and customer_name:
+                response = f"Welcome {customer_name}! How can I assist you today?"
+            # Add handling for "what's my name" or similar queries
+            if customer_name and re.search(r"\b(what('?s| is) my name|who am i|my name)\b", user_input.lower()):
+                response = f"Your name is {customer_name}."
+            return response
         else:
+            # Try LLM for queries not covered by intents
+            if self.llm_handler.is_available():
+                try:
+                    llm_response = self.llm_handler.generate_response(user_input)
+                    return llm_response
+                except Exception as e:
+                    print(f"LLM error: {e}")
+                    # Fallback to default response if LLM fails
+
             # Return default response
             default_intent = next(i for i in self.intents["intents"] if i["tag"] == "default")
             return default_intent["responses"][0]
