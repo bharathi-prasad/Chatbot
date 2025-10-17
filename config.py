@@ -10,11 +10,11 @@ class Config:
     
     # Database configuration - Updated with new database details
     DB_CONFIG = {
-        'host': os.environ.get('DB_HOST', '183.82.119.245'),
+        'host': os.environ.get('DB_HOST', ''),
         'database': os.environ.get('DB_NAME', 'postgres'),
         'user': os.environ.get('DB_USER', 'postgres'),
-        'password': os.environ.get('DB_PASSWORD', 'Lms@123$'),
-        'port': int(os.environ.get('DB_PORT', 5432))
+        'password': os.environ.get('DB_PASSWORD', ''),
+        'port': int(os.environ.get('DB_PORT', ))
     }
     
     # Schema configuration
@@ -55,10 +55,10 @@ class DevelopmentConfig(Config):
     
     # Development database configuration
     DB_CONFIG = {
-        'host': os.environ.get('DB_HOST', '183.82.119.245'),
+        'host': os.environ.get('DB_HOST', ''),
         'database': os.environ.get('DB_NAME', 'postgres'),
         'user': os.environ.get('DB_USER', 'postgres'),
-        'password': os.environ.get('DB_PASSWORD', 'Lms@123$'),
+        'password': os.environ.get('DB_PASSWORD', ''),
         'port': int(os.environ.get('DB_PORT', 5432))
     }
 
@@ -69,11 +69,11 @@ class ProductionConfig(Config):
     
     # Production database configuration
     DB_CONFIG = {
-        'host': os.environ.get('DB_HOST', '183.82.119.245'),
+        'host': os.environ.get('DB_HOST', ''),
         'database': os.environ.get('DB_NAME', 'postgres'),
         'user': os.environ.get('DB_USER', 'postgres'),
-        'password': os.environ.get('DB_PASSWORD', 'Lms@123$'),
-        'port': int(os.environ.get('DB_PORT', 5432)),
+        'password': os.environ.get('DB_PASSWORD', ''),
+        'port': int(os.environ.get('DB_PORT', )),
         'sslmode': os.environ.get('DB_SSLMODE', 'prefer')
     }
 
@@ -84,10 +84,10 @@ class TestingConfig(Config):
     
     # Test database configuration - using same database but different schema/approach
     DB_CONFIG = {
-        'host': '183.82.119.245',
+        'host': '',
         'database': 'postgres',
         'user': 'postgres',
-        'password': 'Lms@123$',
+        'password': '$',
         'port': 5432
     }
 
@@ -98,3 +98,4 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
+
