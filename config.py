@@ -40,6 +40,14 @@ class Config:
     LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
     LOG_FILE = os.environ.get('LOG_FILE', 'chatbot.log')
 
+    # LLM configuration for Ollama
+    LLM_MODEL = os.environ.get('LLM_MODEL', 'llama3:latest')
+    LLM_MAX_TOKENS = int(os.environ.get('LLM_MAX_TOKENS', 1000))
+    LLM_TEMPERATURE = float(os.environ.get('LLM_TEMPERATURE', 0.75))
+
+    # Ollama configuration
+    OLLAMA_BASE_URL = os.environ.get('OLLAMA_BASE_URL', 'http://localhost:11434')
+
 class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
